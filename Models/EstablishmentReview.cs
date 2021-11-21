@@ -1,11 +1,11 @@
 using System;
+using ReviewsAndRatings.Entities;
 using ReviewsAndRatings.Enums;
 
 namespace ReviewsAndRatings.Models
 {
-    public class EstablishmentReview
+    public class EstablishmentReview : Entity
     {
-        public Guid Id {get;set;}
         public Guid IdEstablishment {get;set;}
         public Guid IdCustomer {get;set;}
         public Rating Rating { get; set; }

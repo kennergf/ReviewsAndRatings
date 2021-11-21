@@ -1,11 +1,10 @@
 using System;
+using ReviewsAndRatings.Entities;
 
 namespace ReviewsAndRatings.Models
 {
-    public class WebsiteFeedback
+    public class WebsiteFeedback : Entity
     {
-        public Guid Id {get;set;}
-        
         public Guid IdCompany {get;set;}
 
         public Guid IdCustomer {get;set;}

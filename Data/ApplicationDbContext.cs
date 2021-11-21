@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ReviewsAndRatings.Models;
 
 namespace ReviewsAndRatings.Data
 {
@@ -12,5 +13,7 @@ namespace ReviewsAndRatings.Data
             : base(options)
         {
         }
+        public DbSet<ReviewsAndRatings.Models.EstablishmentReview> EstablishmentReview { get; set; }
+        public DbSet<ReviewsAndRatings.Models.WebsiteFeedback> WebsiteFeedback { get; set; }
     }
 }
