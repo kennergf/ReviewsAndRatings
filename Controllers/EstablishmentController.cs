@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReviewsAndRatings.DTO;
 using ReviewsAndRatings.Interfaces;
@@ -18,7 +19,7 @@ namespace ReviewsAndRatings.Controllers
             _establishmentService = establishmentService;
         }
 
-        //[Authorize]
+        [AllowAnonymous]
         [HttpGet("[action]")]
         public async Task<ActionResult<List<EstablishmentReviewDTO>>> GetReview([FromQuery] Guid IdEstablishment)
         {
@@ -26,7 +27,7 @@ namespace ReviewsAndRatings.Controllers
             return new JsonResult(result);
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost("[action]")]
         public async Task<ActionResult<EstablishmentReviewDTO>> CreateReview(EstablishmentReviewCreateDTO establishmentReviewDTO)
         {
