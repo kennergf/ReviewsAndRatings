@@ -7,7 +7,7 @@ namespace ReviewsAndRatings.Interfaces
 {
     public interface IEstablishmentService
     {
-        Task<List<EstablishmentReviewDTO>> GetReview(Guid IdEstablishment);
+        Task<List<EstablishmentReviewRetrieveDTO>> GetReview(Guid IdEstablishment);
 
         Task<EstablishmentReviewDTO> CreateReview(EstablishmentReviewDTO establishmentReview);
     }

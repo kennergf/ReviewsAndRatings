@@ -8,9 +8,9 @@ namespace ReviewsAndRatings.Services
 {
     public class EstablishmentService : IEstablishmentService
     {
-        public Task<List<EstablishmentReviewDTO>> GetReview(Guid IdEstablishment)
+        public Task<List<EstablishmentReviewRetrieveDTO>> GetReview(Guid IdEstablishment)
         {
-            var result = new List<EstablishmentReviewDTO>();
+            var result = new List<EstablishmentReviewRetrieveDTO>();
             result.Add(new EstablishmentReviewRetrieveDTO
             {
                 IdEstablishment = IdEstablishment,
