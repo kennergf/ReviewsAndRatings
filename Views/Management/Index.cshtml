@@ -1,38 +1,20 @@
-@model IEnumerable<ReviewsAndRatings.DTO.EstablishmentReviewRetrieveDTO>
+@model IEnumerable<ReviewsAndRatings.Models.EstablishmentReview>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Establishment Review</h1>
 
-<hr />
-<div class="row">
-    <div class="col-md-12">
-        @* REF https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/introduction/adding-search *@
-        <form asp-action="Index">
-            <div class="form-inline">
-                <div class="form-group col-md-5">
-                    <label class="control-label">Initial Date</label>
-                    <input class="form-control" name="InitialDate" type="datetime-local" value="@ViewBag.InitialDate"
-                        asp-format="{0:yyyy-MM-ddTHH:mm}">
-                </div>
-                <div class="form-group col-md-4">
-                    <label class="control-label">Final Date</label>
-                    <input class="form-control" name="FinalDate" type="datetime-local" value="@ViewBag.FinalDate"
-                        asp-format="{0:yyyy-MM-ddTHH:mm}">
-                </div>
-                <div class="form-group col-md-3">
-                    <input type="submit" value="Search" class="btn btn-primary" />
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-<hr />
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEstablishment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdCustomer)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Rating)
             </th>
@@ -40,32 +22,33 @@
                 @Html.DisplayNameFor(model => model.Review)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdCustomer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdEstablishment)
+                @Html.DisplayNameFor(model => model.Approved)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Rating)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Review)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdCustomer)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdEstablishment)
-                </td>
-                <td></td>
-            </tr>
-        }
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEstablishment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCustomer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Review)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Approved)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+            </td>
+        </tr>
+}
     </tbody>
 </table>

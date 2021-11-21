@@ -34,6 +34,8 @@ namespace ReviewsAndRatings.Controllers
             // Validate Model
             if (!ModelState.IsValid) return new BadRequestObjectResult(ModelState);
 
+            // TODO Need to check if the logged user is the same on the request
+
             var result = await _establishmentService.CreateReview(establishmentReviewDTO);
             return new CreatedResult(new Uri("/CreateReview"), result);
         }
