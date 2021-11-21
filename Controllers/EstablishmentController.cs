@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ReviewsAndRatings.DTO;
@@ -19,22 +20,21 @@ namespace ReviewsAndRatings.Controllers
 
         //[Authorize]
         [HttpGet("[action]")]
-        public async Task<ActionResult<EstablishmentReviewDTO>> GetReview([FromQuery] Guid IdEstablishment)
+        public async Task<ActionResult<List<EstablishmentReviewDTO>>> GetReview([FromQuery] Guid IdEstablishment)
         {
             var result = await _establishmentService.GetReview(IdEstablishment);
-            return result;
+            return new JsonResult(result);
         }
 
         //[Authorize]
         [HttpPost("[action]")]
-        public async Task<ActionResult<EstablishmentReviewDTO>> CreateReview(EstablishmentReviewDTO establishmentReviewDTO)
+        public async Task<ActionResult<EstablishmentReviewDTO>> CreateReview(EstablishmentReviewCreateDTO establishmentReviewDTO)
         {
-            // if (!ModelState.IsValid) return ModelState;
+            // Validate Model
+            if (!ModelState.IsValid) return new BadRequestObjectResult(ModelState);
 
-            // await _establishmentService.Add(establishmentReviewDTO);
-            // // TODO return something more meaningful
-            // return CustomResponse(establishmentReviewDTO);
-            return null;
+            var result = await _establishmentService.CreateReview(establishmentReviewDTO);
+            return new CreatedResult(new Uri("/CreateReview"), result);
         }
     }
 }
