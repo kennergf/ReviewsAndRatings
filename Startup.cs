@@ -18,6 +18,7 @@ using ReviewsAndRatings.Settings;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using ReviewsAndRatings.DataRepository;
 
 namespace ReviewsAndRatings
 {
@@ -33,12 +34,13 @@ namespace ReviewsAndRatings
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // TODO Change to use MSSQL
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
@@ -50,11 +52,8 @@ namespace ReviewsAndRatings
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
             // Configure Authentication
-            services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(x =>
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(x =>
             {
                 x.RequireHttpsMetadata = true;
                 x.SaveToken = true;
@@ -73,7 +72,11 @@ namespace ReviewsAndRatings
             services.AddControllers();
             services.AddControllersWithViews();
 
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddScoped<IEstablishmentService, EstablishmentService>();
+            services.AddScoped<IEstablishmentReviewRepository, EstablishmentReviewRepository>();
+            services.AddScoped<IWebsiteFeedbackRepository, WebsiteFeedbackRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
